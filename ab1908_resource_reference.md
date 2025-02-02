@@ -1,5 +1,6 @@
 # CS Curriculum Textbooks and References
-
+originally from:
+https://github.dev/AB1908/CS-Books/blob/dev/Curriculum.md
 ## Table of Contents
 
 - [Data Structures and Algorithms](#data-structures-and-algorithms)
