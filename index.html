@@ -64,11 +64,13 @@
                         const subjectDiv = document.createElement("div");
                         subjectDiv.classList.add("calendar");
                         
+                        // Add subject title
                         const subjectTitle = document.createElement("div");
                         subjectTitle.classList.add("header");
                         subjectTitle.textContent = `${subject.name} (${subject.weeks} weeks)`;
                         subjectDiv.appendChild(subjectTitle);
                         
+                        // Add day headers (Mon-Sun)
                         const headers = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
                         headers.forEach(header => {
                             const headerDiv = document.createElement("div");
@@ -77,12 +79,13 @@
                             subjectDiv.appendChild(headerDiv);
                         });
 
-                        // Render checkboxes under each day (columns)
+                        // Add checkboxes under each day (Monday-Sunday) for each week
                         for (let week = 0; week < subject.weeks; week++) {
                             const weekRow = document.createElement("div");
                             weekRow.classList.add("day");
                             subjectDiv.appendChild(weekRow);
                             
+                            // Create a checkbox for each day
                             for (let day = 0; day < 7; day++) {
                                 const cell = document.createElement("div");
                                 cell.classList.add("day");
