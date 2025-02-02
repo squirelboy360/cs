@@ -69,19 +69,20 @@
                         subjectTitle.textContent = `${subject.name} (${subject.weeks} weeks)`;
                         subjectDiv.appendChild(subjectTitle);
                         
-                        const headers = ["Topic", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+                        const headers = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
                         headers.forEach(header => {
                             const headerDiv = document.createElement("div");
                             headerDiv.classList.add("header");
                             headerDiv.textContent = header;
                             subjectDiv.appendChild(headerDiv);
                         });
-                        
+
+                        // Render each topic as a row with checkboxes
                         subject.topics.forEach((topic, topicIndex) => {
-                            const topicCell = document.createElement("div");
-                            topicCell.classList.add("day");
-                            topicCell.textContent = topic;
-                            subjectDiv.appendChild(topicCell);
+                            const topicRow = document.createElement("div");
+                            topicRow.classList.add("day");
+                            topicRow.textContent = topic;
+                            subjectDiv.appendChild(topicRow);
                             
                             for (let week = 0; week < subject.weeks; week++) {
                                 for (let day = 0; day < 7; day++) {
