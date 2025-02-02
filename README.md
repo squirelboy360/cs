@@ -27,12 +27,14 @@ A 12-hour daily schedule optimized for deep work and retention:
    - Algorithm analysis
    - Sorting & searching
    - Graph algorithms
+   - Algorithm design and analysis
 
 3. **Computer Architecture (4 weeks)**
    - Digital logic
    - Assembly basics
    - Memory hierarchy
    - CPU architecture
+   - Microprocessors and microcontrollers
 
 ### **Systems Phase (2.5 months)**
 
@@ -47,12 +49,14 @@ A 12-hour daily schedule optimized for deep work and retention:
    - Protocols
    - Network security
    - Distributed computing basics
+   - Data communication
 
 6. **Database Systems (4 weeks)**
    - Database design
    - Query optimization
    - Transaction processing
    - Distributed databases
+   - Database management systems
 
 ### **Theory Phase (2 months)**
 
@@ -61,6 +65,7 @@ A 12-hour daily schedule optimized for deep work and retention:
    - Formal languages
    - Computability
    - Complexity theory
+   - Information theory and coding
 
 8. **Compiler Design (4 weeks)**
    - Lexical analysis
@@ -81,4 +86,16 @@ A 12-hour daily schedule optimized for deep work and retention:
    - Cloud architecture
    - System design patterns
    - Scalability & reliability
+
+11. **Computer Graphics (4 weeks)**
+   - Raster and vector graphics
+   - 3D rendering
+   - Computer vision basics
+   - Graphics pipelines
+
+12. **Software Engineering (4 weeks)**
+   - Software development life cycle
+   - Agile methodologies
+   - Design patterns
+   - Version control systems
 
