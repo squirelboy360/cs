@@ -27,10 +27,26 @@
             const progressBar = document.getElementById("progress");
             
             const curriculum = [
-                { phase: "Foundation Phase", weeks: 3, topics: ["Discrete Mathematics", "Data Structures & Algorithms", "Computer Architecture"] },
-                { phase: "Systems Phase", weeks: 3, topics: ["Operating Systems", "Computer Networks", "Database Systems"] },
-                { phase: "Theory Phase", weeks: 4, topics: ["Theory of Computation", "Compiler Design"] },
-                { phase: "Advanced Phase", weeks: 6, topics: ["AI & ML", "Systems Design & Engineering", "Computer Graphics", "Software Engineering"] }
+                { phase: "Foundation Phase", weeks: 10, topics: [
+                    { name: "Discrete Mathematics", weeks: 3 },
+                    { name: "Data Structures & Algorithms", weeks: 3 },
+                    { name: "Computer Architecture", weeks: 4 }
+                ]},
+                { phase: "Systems Phase", weeks: 10, topics: [
+                    { name: "Operating Systems", weeks: 3 },
+                    { name: "Computer Networks", weeks: 3 },
+                    { name: "Database Systems", weeks: 4 }
+                ]},
+                { phase: "Theory Phase", weeks: 8, topics: [
+                    { name: "Theory of Computation", weeks: 4 },
+                    { name: "Compiler Design", weeks: 4 }
+                ]},
+                { phase: "Advanced Phase", weeks: 12, topics: [
+                    { name: "Artificial Intelligence & Machine Learning", weeks: 6 },
+                    { name: "Systems Design & Engineering", weeks: 6 },
+                    { name: "Computer Graphics", weeks: 4 },
+                    { name: "Software Engineering", weeks: 4 }
+                ]}
             ];
             
             let progress = JSON.parse(localStorage.getItem("progress")) || {};
@@ -55,23 +71,26 @@
                     section.topics.forEach((topic, topicIndex) => {
                         const topicCell = document.createElement("div");
                         topicCell.classList.add("day");
-                        topicCell.textContent = topic;
+                        topicCell.textContent = topic.name;
                         table.appendChild(topicCell);
                         
-                        for (let day = 0; day < 7; day++) {
-                            const cell = document.createElement("div");
-                            cell.classList.add("day");
-                            
-                            const checkbox = document.createElement("input");
-                            checkbox.type = "checkbox";
-                            const key = `${phaseIndex}-${topicIndex}-${day}`;
-                            checkbox.checked = progress[key] || false;
-                            
-                            checkbox.addEventListener("change", () => toggleProgress(key, cell));
-                            if (checkbox.checked) cell.classList.add("completed");
-                            
-                            cell.appendChild(checkbox);
-                            table.appendChild(cell);
+                        // Add rows for each week based on the "weeks" field for each topic
+                        for (let week = 0; week < topic.weeks; week++) {
+                            for (let day = 0; day < 7; day++) {
+                                const cell = document.createElement("div");
+                                cell.classList.add("day");
+                                
+                                const checkbox = document.createElement("input");
+                                checkbox.type = "checkbox";
+                                const key = `${phaseIndex}-${topicIndex}-${week}-${day}`;
+                                checkbox.checked = progress[key] || false;
+                                
+                                checkbox.addEventListener("change", () => toggleProgress(key, cell));
+                                if (checkbox.checked) cell.classList.add("completed");
+                                
+                                cell.appendChild(checkbox);
+                                table.appendChild(cell);
+                            }
                         }
                     });
                     
@@ -95,7 +114,9 @@
             
             function updateProgress() {
                 const totalTasks = Object.keys(progress).length;
-                const percentage = (totalTasks / (curriculum.reduce((sum, sec) => sum + sec.topics.length * 7, 0))) * 100;
+                const totalWeeks = curriculum.reduce((sum, sec) => sum + sec.topics.reduce((sum2, topic) => sum2 + topic.weeks, 0), 0);
+                const totalDays = totalWeeks * 7; // Each week has 7 days
+                const percentage = (totalTasks / totalDays) * 100;
                 progressBar.style.width = `${percentage}%`;
             }
             
