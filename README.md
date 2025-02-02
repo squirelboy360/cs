@@ -1,4 +1,6 @@
-# Intensive 10-Month Computer Science Curriculum
+# **Intensive 10-Month Computer Science Curriculum Tracker**
+
+Welcome to your personal **CS Study Progress Tracker**. Use this tool to track your progress throughout the **Intensive 10-Month Computer Science Curriculum**.
 
 ## **Daily Study Schedule**
 
@@ -99,3 +101,8 @@ A 12-hour daily schedule optimized for deep work and retention:
    - Design patterns
    - Version control systems
 
+## **Track Your Progress Here**
+
+You can track your progress throughout the 10-month curriculum using the **CS Study Progress Tracker**: 
+
+[CS Study Progress Tracker](https://github.com/squirelboy360/cs/blob/main/tracker.html)
