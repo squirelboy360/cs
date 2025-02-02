@@ -61,34 +61,31 @@
                     phaseDiv.innerHTML = `<div class="phase-title">${section.phase} (${section.duration})</div>`;
                     
                     section.subjects.forEach((subject, subjectIndex) => {
-                        const subjectDiv = document.createElement("div");
-                        
-                        // Add the subject title above the grid
+                        // Add subject title outside the grid
                         const subjectTitle = document.createElement("div");
                         subjectTitle.classList.add("phase-title");
                         subjectTitle.textContent = `${subject.name} (${subject.weeks} weeks)`;
-                        subjectDiv.appendChild(subjectTitle);
+                        phaseDiv.appendChild(subjectTitle);
                         
-                        // Create the calendar grid for this subject
-                        const calendarGrid = document.createElement("div");
-                        calendarGrid.classList.add("calendar");
+                        const subjectDiv = document.createElement("div");
+                        subjectDiv.classList.add("calendar");
                         
-                        // Add headers for each day of the week (Mon, Tue, Wed, Thu, Fri, Sat, Sun)
+                        // Add day headers (Mon-Sun)
                         const headers = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
                         headers.forEach(header => {
                             const headerDiv = document.createElement("div");
                             headerDiv.classList.add("header");
                             headerDiv.textContent = header;
-                            calendarGrid.appendChild(headerDiv);
+                            subjectDiv.appendChild(headerDiv);
                         });
-                        
-                        // Add checkboxes for each week (for each subject)
+
+                        // Add checkboxes under each day (Monday-Sunday) for each week
                         for (let week = 0; week < subject.weeks; week++) {
                             const weekRow = document.createElement("div");
                             weekRow.classList.add("day");
-                            calendarGrid.appendChild(weekRow);
+                            subjectDiv.appendChild(weekRow);
                             
-                            // Add checkboxes for each day (Mon-Sun)
+                            // Create a checkbox for each day
                             for (let day = 0; day < 7; day++) {
                                 const cell = document.createElement("div");
                                 cell.classList.add("day");
@@ -106,7 +103,7 @@
                             }
                         }
                         
-                        subjectDiv.appendChild(calendarGrid);
+                        phaseDiv.appendChild(subjectDiv);
                     });
                     
                     studyPlan.appendChild(phaseDiv);
