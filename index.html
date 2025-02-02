@@ -30,24 +30,24 @@
             
             const curriculum = [
                 { phase: "Foundation Phase", duration: "2.5 months", subjects: [
-                    { name: "Discrete Mathematics", weeks: 3, topics: ["Logic, proofs, sets", "Graph theory", "Combinatorics", "Number theory"] },
-                    { name: "Data Structures & Algorithms", weeks: 3, topics: ["Basic to advanced structures", "Algorithm analysis", "Sorting & searching", "Graph algorithms", "Algorithm design and analysis"] },
-                    { name: "Computer Architecture", weeks: 4, topics: ["Digital logic", "Assembly basics", "Memory hierarchy", "CPU architecture", "Microprocessors and microcontrollers"] }
+                    { name: "Discrete Mathematics", weeks: 3 },
+                    { name: "Data Structures & Algorithms", weeks: 3 },
+                    { name: "Computer Architecture", weeks: 4 }
                 ] },
                 { phase: "Systems Phase", duration: "2.5 months", subjects: [
-                    { name: "Operating Systems", weeks: 3, topics: ["Process management", "Memory management", "File systems", "OS security"] },
-                    { name: "Computer Networks", weeks: 3, topics: ["Network layers", "Protocols", "Network security", "Distributed computing basics", "Data communication"] },
-                    { name: "Database Systems", weeks: 4, topics: ["Database design", "Query optimization", "Transaction processing", "Distributed databases", "Database management systems"] }
+                    { name: "Operating Systems", weeks: 3 },
+                    { name: "Computer Networks", weeks: 3 },
+                    { name: "Database Systems", weeks: 4 }
                 ] },
                 { phase: "Theory Phase", duration: "2 months", subjects: [
-                    { name: "Theory of Computation", weeks: 4, topics: ["Automata theory", "Formal languages", "Computability", "Complexity theory", "Information theory and coding"] },
-                    { name: "Compiler Design", weeks: 4, topics: ["Lexical analysis", "Parsing", "Code generation", "Optimization"] }
+                    { name: "Theory of Computation", weeks: 4 },
+                    { name: "Compiler Design", weeks: 4 }
                 ] },
                 { phase: "Advanced Phase", duration: "3 months", subjects: [
-                    { name: "Artificial Intelligence & Machine Learning", weeks: 6, topics: ["Search algorithms", "Machine learning basics", "Neural networks", "Natural language processing"] },
-                    { name: "Systems Design & Engineering", weeks: 6, topics: ["Distributed systems", "Cloud architecture", "System design patterns", "Scalability & reliability"] },
-                    { name: "Computer Graphics", weeks: 4, topics: ["Raster and vector graphics", "3D rendering", "Computer vision basics", "Graphics pipelines"] },
-                    { name: "Software Engineering", weeks: 4, topics: ["Software development life cycle", "Agile methodologies", "Design patterns", "Version control systems"] }
+                    { name: "Artificial Intelligence & Machine Learning", weeks: 6 },
+                    { name: "Systems Design & Engineering", weeks: 6 },
+                    { name: "Computer Graphics", weeks: 4 },
+                    { name: "Software Engineering", weeks: 4 }
                 ] }
             ];
             
@@ -77,31 +77,28 @@
                             subjectDiv.appendChild(headerDiv);
                         });
 
-                        // Render each topic as a row with checkboxes
-                        subject.topics.forEach((topic, topicIndex) => {
-                            const topicRow = document.createElement("div");
-                            topicRow.classList.add("day");
-                            topicRow.textContent = topic;
-                            subjectDiv.appendChild(topicRow);
+                        // Render checkboxes for each week
+                        for (let week = 0; week < subject.weeks; week++) {
+                            const weekRow = document.createElement("div");
+                            weekRow.classList.add("day");
+                            subjectDiv.appendChild(weekRow);
                             
-                            for (let week = 0; week < subject.weeks; week++) {
-                                for (let day = 0; day < 7; day++) {
-                                    const cell = document.createElement("div");
-                                    cell.classList.add("day");
-                                    
-                                    const checkbox = document.createElement("input");
-                                    checkbox.type = "checkbox";
-                                    const key = `${phaseIndex}-${subjectIndex}-${topicIndex}-${week}-${day}`;
-                                    checkbox.checked = progress[key] || false;
-                                    
-                                    checkbox.addEventListener("change", () => toggleProgress(key, cell));
-                                    if (checkbox.checked) cell.classList.add("completed");
-                                    
-                                    cell.appendChild(checkbox);
-                                    subjectDiv.appendChild(cell);
-                                }
+                            for (let day = 0; day < 7; day++) {
+                                const cell = document.createElement("div");
+                                cell.classList.add("day");
+                                
+                                const checkbox = document.createElement("input");
+                                checkbox.type = "checkbox";
+                                const key = `${phaseIndex}-${subjectIndex}-${week}-${day}`;
+                                checkbox.checked = progress[key] || false;
+                                
+                                checkbox.addEventListener("change", () => toggleProgress(key, cell));
+                                if (checkbox.checked) cell.classList.add("completed");
+                                
+                                cell.appendChild(checkbox);
+                                weekRow.appendChild(cell);
                             }
-                        });
+                        }
                         
                         phaseDiv.appendChild(subjectDiv);
                     });
