@@ -6,6 +6,8 @@
     <title>CS Study Progress Tracker</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
+        .phase { margin-bottom: 30px; }
+        .phase-title { font-size: 1.5em; margin-bottom: 10px; }
         .calendar { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; text-align: center; }
         .day, .header { padding: 10px; border: 1px solid #ccc; }
         .header { font-weight: bold; background: #f4f4f4; }
@@ -27,26 +29,26 @@
             const progressBar = document.getElementById("progress");
             
             const curriculum = [
-                { phase: "Foundation Phase", weeks: 10, topics: [
-                    { name: "Discrete Mathematics", weeks: 3 },
-                    { name: "Data Structures & Algorithms", weeks: 3 },
-                    { name: "Computer Architecture", weeks: 4 }
-                ]},
-                { phase: "Systems Phase", weeks: 10, topics: [
-                    { name: "Operating Systems", weeks: 3 },
-                    { name: "Computer Networks", weeks: 3 },
-                    { name: "Database Systems", weeks: 4 }
-                ]},
-                { phase: "Theory Phase", weeks: 8, topics: [
-                    { name: "Theory of Computation", weeks: 4 },
-                    { name: "Compiler Design", weeks: 4 }
-                ]},
-                { phase: "Advanced Phase", weeks: 12, topics: [
-                    { name: "Artificial Intelligence & Machine Learning", weeks: 6 },
-                    { name: "Systems Design & Engineering", weeks: 6 },
-                    { name: "Computer Graphics", weeks: 4 },
-                    { name: "Software Engineering", weeks: 4 }
-                ]}
+                { phase: "Foundation Phase", duration: "2.5 months", subjects: [
+                    { name: "Discrete Mathematics", weeks: 3, topics: ["Logic, proofs, sets", "Graph theory", "Combinatorics", "Number theory"] },
+                    { name: "Data Structures & Algorithms", weeks: 3, topics: ["Basic to advanced structures", "Algorithm analysis", "Sorting & searching", "Graph algorithms", "Algorithm design and analysis"] },
+                    { name: "Computer Architecture", weeks: 4, topics: ["Digital logic", "Assembly basics", "Memory hierarchy", "CPU architecture", "Microprocessors and microcontrollers"] }
+                ] },
+                { phase: "Systems Phase", duration: "2.5 months", subjects: [
+                    { name: "Operating Systems", weeks: 3, topics: ["Process management", "Memory management", "File systems", "OS security"] },
+                    { name: "Computer Networks", weeks: 3, topics: ["Network layers", "Protocols", "Network security", "Distributed computing basics", "Data communication"] },
+                    { name: "Database Systems", weeks: 4, topics: ["Database design", "Query optimization", "Transaction processing", "Distributed databases", "Database management systems"] }
+                ] },
+                { phase: "Theory Phase", duration: "2 months", subjects: [
+                    { name: "Theory of Computation", weeks: 4, topics: ["Automata theory", "Formal languages", "Computability", "Complexity theory", "Information theory and coding"] },
+                    { name: "Compiler Design", weeks: 4, topics: ["Lexical analysis", "Parsing", "Code generation", "Optimization"] }
+                ] },
+                { phase: "Advanced Phase", duration: "3 months", subjects: [
+                    { name: "Artificial Intelligence & Machine Learning", weeks: 6, topics: ["Search algorithms", "Machine learning basics", "Neural networks", "Natural language processing"] },
+                    { name: "Systems Design & Engineering", weeks: 6, topics: ["Distributed systems", "Cloud architecture", "System design patterns", "Scalability & reliability"] },
+                    { name: "Computer Graphics", weeks: 4, topics: ["Raster and vector graphics", "3D rendering", "Computer vision basics", "Graphics pipelines"] },
+                    { name: "Software Engineering", weeks: 4, topics: ["Software development life cycle", "Agile methodologies", "Design patterns", "Version control systems"] }
+                ] }
             ];
             
             let progress = JSON.parse(localStorage.getItem("progress")) || {};
@@ -54,48 +56,56 @@
             function renderPlan() {
                 studyPlan.innerHTML = "";
                 curriculum.forEach((section, phaseIndex) => {
-                    const sectionDiv = document.createElement("div");
-                    sectionDiv.innerHTML = `<h3>${section.phase}</h3>`;
+                    const phaseDiv = document.createElement("div");
+                    phaseDiv.classList.add("phase");
+                    phaseDiv.innerHTML = `<div class="phase-title">${section.phase} (${section.duration})</div>`;
                     
-                    const table = document.createElement("div");
-                    table.classList.add("calendar");
-                    
-                    const headers = ["Topic", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-                    headers.forEach(header => {
-                        const div = document.createElement("div");
-                        div.classList.add("header");
-                        div.textContent = header;
-                        table.appendChild(div);
-                    });
-                    
-                    section.topics.forEach((topic, topicIndex) => {
-                        const topicCell = document.createElement("div");
-                        topicCell.classList.add("day");
-                        topicCell.textContent = topic.name;
-                        table.appendChild(topicCell);
+                    section.subjects.forEach((subject, subjectIndex) => {
+                        const subjectDiv = document.createElement("div");
+                        subjectDiv.classList.add("calendar");
                         
-                        // Add rows for each week based on the "weeks" field for each topic
-                        for (let week = 0; week < topic.weeks; week++) {
-                            for (let day = 0; day < 7; day++) {
-                                const cell = document.createElement("div");
-                                cell.classList.add("day");
-                                
-                                const checkbox = document.createElement("input");
-                                checkbox.type = "checkbox";
-                                const key = `${phaseIndex}-${topicIndex}-${week}-${day}`;
-                                checkbox.checked = progress[key] || false;
-                                
-                                checkbox.addEventListener("change", () => toggleProgress(key, cell));
-                                if (checkbox.checked) cell.classList.add("completed");
-                                
-                                cell.appendChild(checkbox);
-                                table.appendChild(cell);
+                        const subjectTitle = document.createElement("div");
+                        subjectTitle.classList.add("header");
+                        subjectTitle.textContent = `${subject.name} (${subject.weeks} weeks)`;
+                        subjectDiv.appendChild(subjectTitle);
+                        
+                        const headers = ["Topic", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+                        headers.forEach(header => {
+                            const headerDiv = document.createElement("div");
+                            headerDiv.classList.add("header");
+                            headerDiv.textContent = header;
+                            subjectDiv.appendChild(headerDiv);
+                        });
+                        
+                        subject.topics.forEach((topic, topicIndex) => {
+                            const topicCell = document.createElement("div");
+                            topicCell.classList.add("day");
+                            topicCell.textContent = topic;
+                            subjectDiv.appendChild(topicCell);
+                            
+                            for (let week = 0; week < subject.weeks; week++) {
+                                for (let day = 0; day < 7; day++) {
+                                    const cell = document.createElement("div");
+                                    cell.classList.add("day");
+                                    
+                                    const checkbox = document.createElement("input");
+                                    checkbox.type = "checkbox";
+                                    const key = `${phaseIndex}-${subjectIndex}-${topicIndex}-${week}-${day}`;
+                                    checkbox.checked = progress[key] || false;
+                                    
+                                    checkbox.addEventListener("change", () => toggleProgress(key, cell));
+                                    if (checkbox.checked) cell.classList.add("completed");
+                                    
+                                    cell.appendChild(checkbox);
+                                    subjectDiv.appendChild(cell);
+                                }
                             }
-                        }
+                        });
+                        
+                        phaseDiv.appendChild(subjectDiv);
                     });
                     
-                    sectionDiv.appendChild(table);
-                    studyPlan.appendChild(sectionDiv);
+                    studyPlan.appendChild(phaseDiv);
                 });
                 updateProgress();
             }
@@ -114,9 +124,7 @@
             
             function updateProgress() {
                 const totalTasks = Object.keys(progress).length;
-                const totalWeeks = curriculum.reduce((sum, sec) => sum + sec.topics.reduce((sum2, topic) => sum2 + topic.weeks, 0), 0);
-                const totalDays = totalWeeks * 7; // Each week has 7 days
-                const percentage = (totalTasks / totalDays) * 100;
+                const percentage = (totalTasks / (curriculum.reduce((sum, section) => sum + section.subjects.reduce((subSum, subject) => subSum + subject.weeks * 7, 0), 0))) * 100;
                 progressBar.style.width = `${percentage}%`;
             }
             
