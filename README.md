@@ -1,4 +1,4 @@
- ** 10-Month Computer Science Curriculum**
+<h1>10-Month Computer Science Curriculum</h1>
 
 Welcome to your personal **CS Study Progress Tracker**. Use this tool to track your progress throughout the **Intensive 10-Month Computer Science Curriculum**.
 
